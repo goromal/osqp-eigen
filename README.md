@@ -16,7 +16,7 @@ Simple C++ wrapper for [osqp](http://osqp.readthedocs.io/en/latest/index.html) l
 ## Build the library and the application
 ### Linux / macOs
 ```sh
-git clone https://github.com/robotology/osqp-eigen.git
+git clone --recurse-submodules https://github.com/robotology/osqp-eigen.git
 cd osqp-eigen
 mkdir build && cd build
 cmake ../

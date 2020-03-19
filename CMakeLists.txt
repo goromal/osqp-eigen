@@ -58,7 +58,12 @@ find_package(Eigen3 REQUIRED)
 include_directories(SYSTEM ${EIGEN3_INCLUDE_DIR})
 
 # add OSQP library
-find_package(osqp REQUIRED)
+# find_package(osqp REQUIRED)
+find_library(OSQP_LIB osqp)
+if(NOT OSQP_LIB)
+  message(STATUS "OSQP not found on system; building osqp submodule")
+  add_subdirectory(lib/osqp)
+endif()
 
 set(LIBRARY_TARGET_NAME OsqpEigen)
 
@@ -84,7 +89,7 @@ target_include_directories(${LIBRARY_TARGET_NAME} PUBLIC "$<BUILD_INTERFACE:${CM
   "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
 target_link_libraries(${LIBRARY_TARGET_NAME} PRIVATE Eigen3::Eigen)
-target_link_libraries(${LIBRARY_TARGET_NAME} PUBLIC osqp::osqp)
+target_link_libraries(${LIBRARY_TARGET_NAME} PUBLIC osqp)
 
 add_library(OsqpEigen::OsqpEigen ALIAS OsqpEigen)
 
@@ -121,4 +126,4 @@ if(BUILD_TESTING)
   add_subdirectory(tests)
 endif()
 
-include(AddUninstallTarget)
+# include(AddUninstallTarget)
